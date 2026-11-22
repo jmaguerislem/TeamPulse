@@ -115,4 +115,6 @@ Member memberFromJson(Map<String, dynamic> j) => Member(
   name: j['name'] as String,
   role: (j['role'] as String?) ?? '',
   isLead: (j['lead'] as bool?) ?? false,
+  email: (j['email'] as String?) ?? '',
+  joined: (j['joined'] as bool?) ?? false,
 );

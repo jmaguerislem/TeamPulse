@@ -28,13 +28,14 @@ class _TasksScreenState extends State<TasksScreen> {
   int _filter = 0;
   String _query = '';
 
-  List<Task> _apply(List<Task> all) {
+  List<Task> _apply(List<Task> all, String? myMemberId) {
     final q = _query.trim().toLowerCase();
     final list = all.where((t) {
       final matchesFilter = switch (_filter) {
         1 => t.status == TaskStatus.todo,
         2 => t.status == TaskStatus.inProgress,
         3 => t.status == TaskStatus.done,
+        4 => myMemberId != null && t.assignee == myMemberId,
         _ => true,
       };
       return matchesFilter && (q.isEmpty || t.title.toLowerCase().contains(q));
@@ -46,9 +47,8 @@ class _TasksScreenState extends State<TasksScreen> {
   void _create(AppState s) {
     final l = AppLocalizations.of(context)!;
     if (s.projects.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(l.createProjectFirst)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(l.createProjectFirst)));
       return;
     }
     Navigator.push(
@@ -62,7 +62,7 @@ class _TasksScreenState extends State<TasksScreen> {
     final s = context.watch<AppState>();
     final l = AppLocalizations.of(context)!;
     final p = context.palette;
-    final list = _apply(s.tasks);
+    final list = _apply(s.tasks, s.me?.id);
 
     return SafeArea(
       child: ContentWidth(
@@ -93,6 +93,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     l.taskTodo,
                     l.filterInProgress,
                     l.taskStatusDone,
+                    l.filterMine,
                   ],
                   selected: _filter,
                   onSelected: (i) => setState(() => _filter = i),
@@ -130,7 +131,10 @@ class _TasksScreenState extends State<TasksScreen> {
             Positioned(
               right: AppSpace.page,
               bottom: AppSpace.fabBottom,
-              child: GradientFab(tooltip: l.newTask, onPressed: () => _create(s)),
+              child: GradientFab(
+                tooltip: l.newTask,
+                onPressed: () => _create(s),
+              ),
             ),
           ],
         ),

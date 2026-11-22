@@ -280,5 +280,13 @@
   "codeCopied": "Code copied",
   "fileTooLarge": "File too large (10 MB maximum).",
   "deleteAttachmentTitle": "Delete the attachment?",
-  "deleteAttachmentBody": "“{name}” will be deleted for the whole team."
+  "deleteAttachmentBody": "“{name}” will be deleted for the whole team.",
+  "memberEmailLabel": "Member email",
+  "memberEmailHint": "member@domain.com",
+  "enterMemberEmail": "Enter the member's email.",
+  "memberPending": "Invitation pending",
+  "memberEmailExists": "A member with this email already exists.",
+  "onlyLeadCanManage": "Only the project lead can manage members.",
+  "notInvited": "This email was not added to this team. Ask the project lead to add you.",
+  "filterMine": "My tasks"
 }

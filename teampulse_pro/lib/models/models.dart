@@ -113,12 +113,16 @@ class Member {
   String name;
   String role;
   bool isLead;
+  String email; // e-mail renseigné par la cheffe de projet
+  bool joined; // true quand la personne a créé son compte
 
   Member({
     required this.id,
     required this.name,
     required this.role,
     this.isLead = false,
+    this.email = '',
+    this.joined = false,
   });
 
   String get initials {
@@ -137,6 +141,8 @@ class Member {
     'name': name,
     'role': role,
     'isLead': isLead,
+    'email': email,
+    'joined': joined,
   };
 
   factory Member.fromJson(Map<String, dynamic> j) => Member(
@@ -144,6 +150,8 @@ class Member {
     name: j['name'],
     role: j['role'],
     isLead: j['isLead'] ?? false,
+    email: j['email'] ?? '',
+    joined: j['joined'] ?? false,
   );
 }
 

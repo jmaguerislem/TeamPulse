@@ -63,8 +63,8 @@ class TeamScreen extends StatelessWidget {
                           icon: Icons.groups_outlined,
                           title: l.noMembersYet,
                           message: l.noMembersHint,
-                          actionLabel: l.newMember,
-                          onAction: () => _add(context),
+                          actionLabel: s.isLead ? l.newMember : null,
+                          onAction: s.isLead ? () => _add(context) : null,
                         )
                       : ListView.separated(
                           padding: const EdgeInsets.fromLTRB(
@@ -79,17 +79,22 @@ class TeamScreen extends StatelessWidget {
                           itemBuilder: (_, i) => MemberTile(
                             member: members[i],
                             taskCount: s.tasksOfMember(members[i].id),
+                            canRemove: s.isLead,
                             onRemove: () => _remove(context, members[i]),
                           ),
                         ),
                 ),
               ],
             ),
-            Positioned(
-              right: AppSpace.page,
-              bottom: AppSpace.fabBottom,
-              child: GradientFab(tooltip: l.newMember, onPressed: () => _add(context)),
-            ),
+            if (s.isLead)
+              Positioned(
+                right: AppSpace.page,
+                bottom: AppSpace.fabBottom,
+                child: GradientFab(
+                  tooltip: l.newMember,
+                  onPressed: () => _add(context),
+                ),
+              ),
           ],
         ),
       ),

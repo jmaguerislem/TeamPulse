@@ -316,5 +316,13 @@
   "fileTooLarge": "Fichier trop volumineux (10 Mo maximum).",
   "deleteAttachmentTitle": "Supprimer la pièce jointe ?",
   "deleteAttachmentBody": "« {name} » sera supprimé pour toute l’équipe.",
-  "@deleteAttachmentBody": { "placeholders": { "name": { "type": "String" } } }
+  "@deleteAttachmentBody": { "placeholders": { "name": { "type": "String" } } },
+  "memberEmailLabel": "E-mail du membre",
+  "memberEmailHint": "membre@domaine.com",
+  "enterMemberEmail": "Entrez l’e-mail du membre.",
+  "memberPending": "Invitation en attente",
+  "memberEmailExists": "Un membre avec cet e-mail existe déjà.",
+  "onlyLeadCanManage": "Seule la cheffe de projet peut gérer les membres.",
+  "notInvited": "Cet e-mail n’a pas été ajouté à cette équipe. Demandez à la cheffe de projet de vous ajouter.",
+  "filterMine": "Mes tâches"
 }

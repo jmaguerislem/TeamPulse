@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/auth_service.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../widgets/error_banner.dart';
 import '../../../widgets/form_label.dart';
 import '../../../widgets/primary_button.dart';
 
-/// Formulaire d'ajout d'un membre (nom + rôle).
+/// Formulaire d'ajout d'un membre (nom, rôle et e-mail). La personne devra
+/// créer son compte avec cet e-mail et le code d'équipe.
 class MemberForm extends StatefulWidget {
-  final Future<String?> Function(String name, String role) onSubmit;
+  final Future<String?> Function(String name, String role, String email)
+  onSubmit;
   const MemberForm({super.key, required this.onSubmit});
 
   @override
@@ -18,6 +21,7 @@ class _MemberFormState extends State<MemberForm> {
   final _formKey = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _role = TextEditingController();
+  final _email = TextEditingController();
   String? _error;
   bool _loading = false;
 
@@ -25,6 +29,7 @@ class _MemberFormState extends State<MemberForm> {
   void dispose() {
     _name.dispose();
     _role.dispose();
+    _email.dispose();
     super.dispose();
   }
 
@@ -34,7 +39,11 @@ class _MemberFormState extends State<MemberForm> {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _loading = true);
-    final error = await widget.onSubmit(_name.text.trim(), _role.text.trim());
+    final error = await widget.onSubmit(
+      _name.text.trim(),
+      _role.text.trim(),
+      _email.text.trim(),
+    );
     if (!mounted) return; // l'écran a été fermé (ajout réussi)
     setState(() {
       _loading = false;
@@ -65,11 +74,23 @@ class _MemberFormState extends State<MemberForm> {
           TextFormField(
             controller: _role,
             textCapitalization: TextCapitalization.sentences,
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => _submit(),
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(hintText: l.roleHint),
             validator: (v) =>
                 (v == null || v.trim().isEmpty) ? l.enterMemberRole : null,
+          ),
+          FormLabel(l.memberEmailLabel, required: true),
+          TextFormField(
+            controller: _email,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => _submit(),
+            decoration: InputDecoration(hintText: l.memberEmailHint),
+            validator: (v) {
+              if (v == null || v.trim().isEmpty) return l.enterMemberEmail;
+              if (!AuthService.isValidEmail(v)) return l.invalidEmail;
+              return null;
+            },
           ),
           if (_error != null) ErrorBanner(_error!),
           const SizedBox(height: 28),

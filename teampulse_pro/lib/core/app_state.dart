@@ -94,6 +94,15 @@ class AppState extends ChangeNotifier {
   }
 
   // ---------- Membres ----------
+  /// La fiche « membre » de la personne connectée.
+  Member? get me {
+    final id = AuthService.current?.memberId;
+    return id == null ? null : memberById(id);
+  }
+
+  /// Seule la cheffe de projet gère les membres.
+  bool get isLead => me?.isLead ?? false;
+
   Member? memberById(String id) {
     for (final m in _members) {
       if (m.id == id) return m;
@@ -573,10 +582,12 @@ class AppState extends ChangeNotifier {
   Future<void> createMember({
     required String name,
     required String role,
+    required String email,
   }) async {
     final json = await ApiClient.post('/api/members', {
       'name': name,
       'role': role,
+      'email': email,
     });
     _members.add(memberFromJson(json as Map<String, dynamic>));
     notifyListeners();

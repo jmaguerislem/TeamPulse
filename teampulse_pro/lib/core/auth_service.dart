@@ -7,11 +7,15 @@ class Account {
   final String email;
   final String workspaceCode;
 
+  /// Fiche « membre » liée à ce compte (null si aucune).
+  final String? memberId;
+
   const Account({
     required this.id,
     required this.fullName,
     required this.email,
     required this.workspaceCode,
+    this.memberId,
   });
 
   factory Account.fromJson(Map<String, dynamic> j) => Account(
@@ -19,6 +23,7 @@ class Account {
     fullName: j['fullName'] as String,
     email: j['email'] as String,
     workspaceCode: j['workspaceCode'] as String,
+    memberId: j['memberId'] as String?,
   );
 }
 
@@ -29,6 +34,7 @@ enum AuthError {
   wrongOldPassword,
   wrongCredentials,
   workspaceNotFound,
+  notInvited,
   network,
   server,
 }
@@ -87,7 +93,11 @@ class AuthService {
       await _startSession(data as Map<String, dynamic>);
       return null;
     } on ApiException catch (e) {
-      return _map(e, on409: AuthError.accountExists);
+      return _map(
+        e,
+        on403: AuthError.notInvited,
+        on409: AuthError.accountExists,
+      );
     }
   }
 

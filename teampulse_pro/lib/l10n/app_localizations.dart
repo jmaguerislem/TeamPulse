@@ -1771,6 +1771,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'« {name} » sera supprimé pour toute l’équipe.'**
   String deleteAttachmentBody(String name);
+
+  /// No description provided for @memberEmailLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'E-mail du membre'**
+  String get memberEmailLabel;
+
+  /// No description provided for @memberEmailHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'membre@domaine.com'**
+  String get memberEmailHint;
+
+  /// No description provided for @enterMemberEmail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrez l’e-mail du membre.'**
+  String get enterMemberEmail;
+
+  /// No description provided for @memberPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invitation en attente'**
+  String get memberPending;
+
+  /// No description provided for @memberEmailExists.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un membre avec cet e-mail existe déjà.'**
+  String get memberEmailExists;
+
+  /// No description provided for @onlyLeadCanManage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seule la cheffe de projet peut gérer les membres.'**
+  String get onlyLeadCanManage;
+
+  /// No description provided for @notInvited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet e-mail n’a pas été ajouté à cette équipe. Demandez à la cheffe de projet de vous ajouter.'**
+  String get notInvited;
+
+  /// No description provided for @filterMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes tâches'**
+  String get filterMine;
 }
 
 class _AppLocalizationsDelegate

@@ -959,4 +959,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String deleteAttachmentBody(String name) {
     return '“$name” will be deleted for the whole team.';
   }
+
+  @override
+  String get memberEmailLabel => 'Member email';
+
+  @override
+  String get memberEmailHint => 'member@domain.com';
+
+  @override
+  String get enterMemberEmail => 'Enter the member\'s email.';
+
+  @override
+  String get memberPending => 'Invitation pending';
+
+  @override
+  String get memberEmailExists => 'A member with this email already exists.';
+
+  @override
+  String get onlyLeadCanManage => 'Only the project lead can manage members.';
+
+  @override
+  String get notInvited =>
+      'This email was not added to this team. Ask the project lead to add you.';
+
+  @override
+  String get filterMine => 'My tasks';
 }

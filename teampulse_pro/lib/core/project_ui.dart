@@ -75,6 +75,8 @@ String authErrorText(AuthError e, AppLocalizations l) {
       return l.wrongCredentials;
     case AuthError.workspaceNotFound:
       return l.workspaceNotFound;
+    case AuthError.notInvited:
+      return l.notInvited;
     case AuthError.network:
       return l.networkError;
     case AuthError.server:
